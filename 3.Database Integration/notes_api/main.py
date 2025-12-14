@@ -1,22 +1,23 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+
 from database.mongodb import connect_to_mongodb, close_mongodb_connection
 from routes.notes import router as notes_router
-
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
     Lifespan context manager for startup and shutdown events
     """
-    # Startup: Connect to MongoDB
     connect_to_mongodb()
     yield
-    # Shutdown: Close MongoDB connection
     close_mongodb_connection()
 
-
-# Initialize FastAPI app
 app = FastAPI(
     title="Notes API",
     description="A simple Notes API with MongoDB integration",
@@ -24,10 +25,7 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-
-# Include routers
 app.include_router(notes_router)
-
 
 @app.get("/")
 def root():

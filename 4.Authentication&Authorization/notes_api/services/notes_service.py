@@ -1,8 +1,8 @@
 from datetime import datetime
 from bson import ObjectId
-from typing import Optional
-from database.mongodb import get_collection
-from schemas.notes import NoteCreate, NoteUpdate, NoteResponse
+from typing import Optional, List
+from ...core.database import get_collection
+from ..schemas.notes import NoteCreate, NoteUpdate, NoteResponse
 
 NOTES_COLLECTION = "notes"
 
@@ -21,7 +21,6 @@ def serialize_note(note: dict) -> dict:
         del note["_id"]
     return note
 
-
 def create_note_service(note_data: NoteCreate) -> NoteResponse:
     """
     Create a new note in the database
@@ -33,14 +32,13 @@ def create_note_service(note_data: NoteCreate) -> NoteResponse:
         Created note response
     """
     collection = get_collection(NOTES_COLLECTION)
-    note_dict = note_data.model_dump()
+    note_dict = note_data.dict()
     note_dict["created_at"] = datetime.utcnow()
     note_dict["updated_at"] = datetime.utcnow()
     result = collection.insert_one(note_dict)
     created_note = collection.find_one({"_id": result.inserted_id})
     
     return NoteResponse(**serialize_note(created_note))
-
 
 def get_all_notes_service(skip: int = 0, limit: int = 100, tag: Optional[str] = None) -> dict:
     """
@@ -68,7 +66,6 @@ def get_all_notes_service(skip: int = 0, limit: int = 100, tag: Optional[str] = 
         "total": total
     }
 
-
 def get_note_by_id_service(note_id: str) -> Optional[NoteResponse]:
     """
     Retrieve a single note by ID
@@ -89,7 +86,6 @@ def get_note_by_id_service(note_id: str) -> Optional[NoteResponse]:
     except Exception:
         return None
 
-
 def update_note_service(note_id: str, note_data: NoteUpdate) -> Optional[NoteResponse]:
     """
     Update an existing note
@@ -104,7 +100,7 @@ def update_note_service(note_id: str, note_data: NoteUpdate) -> Optional[NoteRes
     collection = get_collection(NOTES_COLLECTION)
     
     try:
-        update_dict = {k: v for k, v in note_data.model_dump().items() if v is not None}
+        update_dict = {k: v for k, v in note_data.dict().items() if v is not None}
         
         if not update_dict:
             return get_note_by_id_service(note_id)
@@ -121,7 +117,6 @@ def update_note_service(note_id: str, note_data: NoteUpdate) -> Optional[NoteRes
         return None
     except Exception:
         return None
-
 
 def delete_note_service(note_id: str) -> bool:
     """
@@ -141,8 +136,7 @@ def delete_note_service(note_id: str) -> bool:
     except Exception:
         return False
 
-
-def search_notes_service(search_term: str) -> list[NoteResponse]:
+def search_notes_service(search_term: str) -> List[NoteResponse]:
     """
     Search notes by title or content
     

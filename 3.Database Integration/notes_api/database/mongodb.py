@@ -1,15 +1,15 @@
+import os
 from pymongo import MongoClient
 from pymongo.database import Database
 from pymongo.collection import Collection
+from dotenv import load_dotenv
+load_dotenv()
 
-# MongoDB connection settings
-MONGO_URI = "mongodb://localhost:27017/"
-DATABASE_NAME = "notes_db"
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
+DATABASE_NAME = os.getenv("DATABASE_NAME", "notes_db")
 
-# Global database connection
 client: MongoClient = None
 database: Database = None
-
 
 def connect_to_mongodb():
     """
@@ -19,7 +19,6 @@ def connect_to_mongodb():
     try:
         client = MongoClient(MONGO_URI)
         database = client[DATABASE_NAME]
-        # Test the connection
         client.server_info()
         print(f"Successfully connected to MongoDB database: {DATABASE_NAME}")
     except Exception as e:

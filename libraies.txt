@@ -1,0 +1,110 @@
+🚀 IMPORTANT LIBRARIES USED WITH FASTAPI
+🔐 AUTHENTICATION & SECURITY
+python-jose
+
+JWT creation and verification (tokens, expiration, signing).
+
+bcrypt / passlib
+
+Password hashing and verification (never store raw passwords).
+
+fastapi-security
+
+OAuth2, API keys, dependency-based auth helpers.
+
+🗄️ DATABASE & ORM
+motor
+
+Async MongoDB driver (non-blocking I/O).
+
+pymongo
+
+Sync MongoDB driver (avoid in async FastAPI).
+
+SQLAlchemy
+
+ORM for SQL databases (PostgreSQL, MySQL).
+
+Tortoise ORM
+
+Async ORM (Django-like, async-native).
+
+📦 DATA VALIDATION & SERIALIZATION
+pydantic
+
+Request/response validation and type safety.
+
+email-validator
+
+Validates email format (used internally by Pydantic).
+
+📡 API UTILITIES
+httpx
+
+Async HTTP client (API-to-API calls).
+
+python-multipart
+
+Handles file uploads (required for forms).
+
+🧪 TESTING
+pytest
+
+Testing framework.
+
+pytest-asyncio
+
+Async test support.
+
+📧 EMAIL & BACKGROUND TASKS
+fastapi-mail
+
+Async email sending (nodemailer equivalent).
+
+celery
+
+Background task processing (heavy jobs).
+
+rq
+
+Lightweight background jobs with Redis.
+
+⚙️ CONFIGURATION & ENV
+python-dotenv
+
+Loads environment variables from .env.
+
+pydantic-settings
+
+Typed environment configuration.
+
+📊 LOGGING & MONITORING
+loguru
+
+Clean, structured logging.
+
+sentry-sdk
+
+Error tracking & monitoring.
+
+🐳 DEPLOYMENT & PROD
+uvicorn
+
+ASGI server (runs FastAPI).
+
+gunicorn
+
+Process manager (used with Uvicorn workers).
+
+docker
+
+Containerization.
+
+⚡ PERFORMANCE & SCALING
+redis
+
+Caching, rate limiting, background jobs.
+
+slowapi
+
+Rate limiting for FastAPI.

@@ -1,0 +1,10 @@
+fastapi #use for building the API
+uvicorn #use for running the API
+motor #use for connecting to MongoDB
+python-dotenv #use for loading environment variables
+pydantic #use for data validation
+bcrypt #use for password hashing
+python-jose #use for JWT authentication
+passlib[bcrypt] # Password hashing and verification
+python-multipart # Support for parsing form data
+email-validator # Email validation for Pydantic models

@@ -40,6 +40,7 @@ async def update_todo(todo_id: str, user_id: str, data: dict):
         return None
 
     result["id"] = str(result["_id"])
+    del result["_id"]
     return result
 
 

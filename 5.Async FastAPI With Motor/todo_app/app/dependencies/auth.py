@@ -11,8 +11,8 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     try:
         payload = jwt.decode(
             token,
-            settings.JWT_SECRET,
-            algorithms=[settings.JWT_ALGORITHM]
+            settings.JWT_SECRET_KEY,
+            algorithms=[settings.ALGORITHM]
         )
         user_id = payload.get("user_id")
         if not user_id:

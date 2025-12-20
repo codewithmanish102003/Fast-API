@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException
 from app.schemas.user_schema import UserRegister, UserLogin
 from app.services.user_service import register_user, login_user
 
-router = APIRouter(prefix="/auth", tags=["Auth"])
+router = APIRouter(prefix="/api/auth", tags=["Auth"])
 
 @router.post("/register")
 async def register(data: UserRegister):
